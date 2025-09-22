@@ -203,3 +203,137 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+
+
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   const compareBtn = document.getElementById('compare-btn');
+//   const currentProductDiv = document.getElementById('current-product');
+//   const comparisonResultsDiv = document.getElementById('comparison-results');
+
+//   // Get current tab info and product
+//   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+//     const currentTab = tabs[0];
+
+//     chrome.tabs.sendMessage(
+//       currentTab.id,
+//       { message: 'get_product_info' },
+//       function (response) {
+//         if (response) {
+//           displayCurrentProduct(response);
+//         } else {
+//           currentProductDiv.innerHTML = `
+//             <div class="error">
+//               Could not retrieve product information. Please refresh the page and try again.
+//             </div>
+//           `;
+//         }
+//       }
+//     );
+//   });
+
+//   // Show current product details
+//   function displayCurrentProduct(product) {
+//     let badgeClass =
+//       product.site === 'amazon' ? 'amazon-badge' : 'flipkart-badge';
+//     let badgeText = product.site === 'amazon' ? 'Amazon' : 'Flipkart';
+
+//     currentProductDiv.innerHTML = `
+//       <span class="site-badge ${badgeClass}">${badgeText}</span>
+//       ${
+//         product.image
+//           ? `<img src="${product.image}" class="product-image">`
+//           : ''
+//       }
+//       <div class="product-title">${product.title}</div>
+//       <div class="product-price">${product.price}</div>
+//       <div style="clear: both;"></div>
+//     `;
+//   }
+
+//   // Handle Compare button click
+//   compareBtn.addEventListener('click', function () {
+//     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+//       const currentTab = tabs[0];
+
+//       chrome.tabs.sendMessage(
+//         currentTab.id,
+//         { message: 'get_product_info' },
+//         function (response) {
+//           if (response && response.title) {
+//             const searchQuery = extractSearchKeywords(response.title);
+//             showComparisonButtons(searchQuery, response.site);
+//           } else {
+//             comparisonResultsDiv.innerHTML = `
+//               <div class="error">
+//                 Please navigate to a product page on Amazon or Flipkart first.
+//               </div>
+//             `;
+//           }
+//         }
+//       );
+//     });
+//   });
+
+//   // Clean search query
+//   function extractSearchKeywords(title) {
+//     return title
+//       .replace(/[^\w\s]/gi, '') // remove special chars
+//       .replace(
+//         /\b(the|a|an|and|or|for|of|in|on|at|to|with|by|from|is|are|was|were|be|being|been|this|that|these|those|it|its|amazon|flipkart|online|shopping|buy)\b/gi,
+//         ''
+//       )
+//       .replace(/\s+/g, ' ')
+//       .trim()
+//       .split(' ')
+//       .slice(0, 6)
+//       .join(' ');
+//   }
+
+//   // Show buttons for all comparison sites
+//   function showComparisonButtons(searchQuery, currentSite) {
+//     const searchUrls = {
+//       amazon: `https://www.amazon.in/s?k=${encodeURIComponent(searchQuery)}`,
+//       flipkart: `https://www.flipkart.com/search?q=${encodeURIComponent(
+//         searchQuery
+//       )}`,
+//       croma: `https://www.croma.com/search/?text=${encodeURIComponent(
+//         searchQuery
+//       )}`,
+//       reliancedigital: `https://www.reliancedigital.in/search?q=${encodeURIComponent(
+//         searchQuery
+//       )}`,
+//       tatacliq: `https://www.tatacliq.com/search/?searchCategory=all&text=${encodeURIComponent(
+//         searchQuery
+//       )}`,
+//       vijaysales: `https://www.vijaysales.com/search/${encodeURIComponent(
+//         searchQuery
+//       )}`,
+//     };
+
+//     let resultsHTML = `<h3>Select a site to compare:</h3>`;
+
+//     for (const [site, url] of Object.entries(searchUrls)) {
+//       if (site !== currentSite) {
+//         let siteLabel =
+//           site.charAt(0).toUpperCase() + site.slice(1).replace('-', ' ');
+//         resultsHTML += `
+//           <button class="compare-btn" data-url="${url}">
+//             Compare on ${siteLabel}
+//           </button>
+//         `;
+//       }
+//     }
+
+//     comparisonResultsDiv.innerHTML = resultsHTML;
+
+//     // Add event listeners
+//     document.querySelectorAll('.compare-btn').forEach((btn) => {
+//       btn.addEventListener('click', function () {
+//         chrome.tabs.create({ url: this.getAttribute('data-url') });
+//       });
+//     });
+//   }
+// });

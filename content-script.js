@@ -57,11 +57,17 @@ function getProductInfo() {
               "Title not found";
       
       // Get product price from Flipkart
-      price = document.querySelector("._30jeq3") ?
-              document.querySelector("._30jeq3").textContent :
-              document.querySelector("._16Jk6d") ?
-              document.querySelector("._16Jk6d").textContent :
-              "Price not found";
+                let priceElement =
+                     document.querySelector(".Nx9bqj.CxhGGd") || // new Flipkart price class
+                      document.querySelector("._30jeq3") ||       // older Flipkart price class
+                      document.querySelector("._16Jk6d");         // alternate Flipkart class
+
+         if (priceElement) {
+               price = priceElement.textContent.replace(/\s+/g, ' ').trim();
+               } else {
+                 price = "Price not found";
+              }
+  
       
       // Get product image from Flipkart
       image = document.querySelector("._396cs4") ?
